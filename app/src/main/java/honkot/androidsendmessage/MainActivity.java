@@ -1,6 +1,7 @@
 package honkot.androidsendmessage;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
@@ -19,14 +20,22 @@ public class MainActivity extends AppCompatActivity {
 
     private UserInput mInput;
     private ActivityMainBinding mBind;
+    private CheckRuntimePermission mCheckPermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBind = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mCheckPermission = new CheckRuntimePermission();
+        mCheckPermission.checkPermission(this);
         mInput = new UserInput();
         mBind.setInput(mInput);
         updateView();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        mCheckPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void updateView() {
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         private boolean checkRequired() {
             if (mBind.phoneNumber.getVisibility() != View.GONE) {
-                if (phoneNumber.isEmpty() || !phoneNumber.startsWith("+")) {
+                if (phoneNumber.isEmpty()) {// || !phoneNumber.startsWith("+")) {
                     return false;
                 }
             }
