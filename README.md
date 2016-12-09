@@ -3,7 +3,7 @@ This project is just sample which checks whether Android App can send SMS or Wha
 ### Attention
 
 I could not find any solution to send a message directly throw WhatsApp.
-So, in this app, the function to do it does not work.
+So, in this app, the function to do it Does Not work.
 
 ### Reference
 
